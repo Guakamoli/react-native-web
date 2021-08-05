@@ -162,7 +162,9 @@ const Text: React.AbstractComponent<TextProps, HTMLElement & PlatformMethods> = 
 );
 
 Text.displayName = 'Text';
-
+Text.propTypes = {
+  style: null
+};
 const classes = css.create({
   text: {
     border: '0 solid black',

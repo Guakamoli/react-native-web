@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Copyright (c) Nicolas Gallagher.
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -117,6 +118,8 @@ function resolveAssetUri(source): ?string {
     uri = source;
   } else if (source && typeof source.uri === 'string') {
     uri = source.uri;
+  } else if (source && source.uri && typeof source.uri.src === 'string') {
+    uri = source.uri.src;
   }
 
   if (uri) {
@@ -201,7 +204,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const hiddenImage = displayImageUri
       ? createElement('img', {
           alt: accessibilityLabel || '',
-          classList: [classes.accessibilityImage],
+          classList: [classes.accessibilityImage, resizeModeStyles[resizeMode]],
           draggable: draggable || false,
           ref: hiddenImageRef,
           src: displayImageUri
@@ -286,15 +289,6 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
         ref={ref}
         style={[styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]}
       >
-        <View
-          style={[
-            styles.image,
-            resizeModeStyles[resizeMode],
-            { backgroundImage, filter },
-            backgroundSize != null && { backgroundSize }
-          ]}
-          suppressHydrationWarning={true}
-        />
         {hiddenImage}
         {createTintColorSVG(tintColor, filterRef.current)}
       </View>
@@ -325,11 +319,12 @@ ImageWithStatics.queryCache = function (uris) {
 
 const classes = css.create({
   accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
-    height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
+    // ...StyleSheet.absoluteFillObject,
+    // height: '100%',
+    height: 'auto',
+    // opacity: 0,
+    width: '100%'
+    // zIndex: -1
   }
 });
 
@@ -337,7 +332,9 @@ const styles = StyleSheet.create({
   root: {
     flexBasis: 'auto',
     overflow: 'hidden',
-    zIndex: 0
+    zIndex: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   inline: {
     display: 'inline-flex'
@@ -354,15 +351,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const resizeModeStyles = StyleSheet.create({
+const resizeModeStyles = css.create({
   center: {
-    backgroundSize: 'auto'
+    // backgroundSize: 'contain'
+    objectFit: 'contain'
   },
   contain: {
-    backgroundSize: 'contain'
+    // backgroundSize: 'contain'
+    objectFit: 'contain'
   },
   cover: {
-    backgroundSize: 'cover'
+    // backgroundSize: 'cover'
+    objectFit: 'cover'
   },
   none: {
     backgroundPosition: '0 0',

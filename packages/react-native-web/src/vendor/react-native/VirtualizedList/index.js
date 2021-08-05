@@ -875,6 +875,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         : styles.verticallyInverted
       : null;
     const cells = [];
+        const header =[];
+        const empty = []
     const stickyIndicesFromProps = new Set(this.props.stickyHeaderIndices);
     const stickyHeaderIndices = [];
     if (ListHeaderComponent) {
@@ -887,7 +889,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         // $FlowFixMe
         <ListHeaderComponent />
       );
-      cells.push(
+      header.push(
         <VirtualizedListCellContextProvider
           cellKey={this._getCellKey() + '-header'}
           key="$header">
@@ -1091,6 +1093,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           unregisterAsNestedChild: this._unregisterAsNestedChild,
           debugInfo: this._getDebugInfo(),
         }}>
+        {header[0]}
         {React.cloneElement(
           (
             this.props.renderScrollComponent ||
