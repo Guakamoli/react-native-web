@@ -239,7 +239,7 @@ var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var hiddenImage = displayImageUri ? (0, _createElement.default)('img', {
     alt: accessibilityLabel || '',
-    classList: [classes.accessibilityImage],
+    classList: [classes.accessibilityImage, resizeModeStyles[resizeMode]],
     draggable: draggable || false,
     ref: hiddenImageRef,
     src: displayImageUri
@@ -325,14 +325,6 @@ var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
     pointerEvents: pointerEvents,
     ref: ref,
     style: [styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]
-  }), /*#__PURE__*/React.createElement(_View.default, {
-    style: [styles.image, resizeModeStyles[resizeMode], {
-      backgroundImage: backgroundImage,
-      filter: filter
-    }, backgroundSize != null && {
-      backgroundSize: backgroundSize
-    }],
-    suppressHydrationWarning: true
   }), hiddenImage, createTintColorSVG(tintColor, filterRef.current));
 });
 Image.displayName = 'Image'; // $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
@@ -352,19 +344,23 @@ ImageWithStatics.queryCache = function (uris) {
 };
 
 var classes = _css.default.create({
-  accessibilityImage: _objectSpread(_objectSpread({}, _StyleSheet.default.absoluteFillObject), {}, {
-    height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
-  })
+  accessibilityImage: {
+    // ...StyleSheet.absoluteFillObject,
+    // height: '100%',
+    height: 'auto',
+    // opacity: 0,
+    width: '100%' // zIndex: -1
+
+  }
 });
 
 var styles = _StyleSheet.default.create({
   root: {
     flexBasis: 'auto',
     overflow: 'hidden',
-    zIndex: 0
+    zIndex: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   inline: {
     display: 'inline-flex'
@@ -380,15 +376,21 @@ var styles = _StyleSheet.default.create({
   })
 });
 
-var resizeModeStyles = _StyleSheet.default.create({
+var resizeModeStyles = _css.default.create({
   center: {
-    backgroundSize: 'auto'
+    // backgroundSize: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   contain: {
-    backgroundSize: 'contain'
+    // backgroundSize: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   cover: {
-    backgroundSize: 'cover'
+    // backgroundSize: 'cover'
+    objectFit: 'cover',
+    height: '100%'
   },
   none: {
     backgroundPosition: '0 0',

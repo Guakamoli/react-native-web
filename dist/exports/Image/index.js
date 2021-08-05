@@ -8,6 +8,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+/* eslint-disable */
+
 /**
  * Copyright (c) Nicolas Gallagher.
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -226,7 +228,7 @@ var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
 
   var hiddenImage = displayImageUri ? createElement('img', {
     alt: accessibilityLabel || '',
-    classList: [classes.accessibilityImage],
+    classList: [classes.accessibilityImage, resizeModeStyles[resizeMode]],
     draggable: draggable || false,
     ref: hiddenImageRef,
     src: displayImageUri
@@ -311,14 +313,6 @@ var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
     pointerEvents: pointerEvents,
     ref: ref,
     style: [styles.root, hasTextAncestor && styles.inline, imageSizeStyle, flatStyle]
-  }), /*#__PURE__*/React.createElement(View, {
-    style: [styles.image, resizeModeStyles[resizeMode], {
-      backgroundImage: backgroundImage,
-      filter: filter
-    }, backgroundSize != null && {
-      backgroundSize: backgroundSize
-    }],
-    suppressHydrationWarning: true
   }), hiddenImage, createTintColorSVG(tintColor, filterRef.current));
 });
 Image.displayName = 'Image'; // $FlowIgnore: This is the correct type, but casting makes it unhappy since the variables aren't defined yet
@@ -338,18 +332,22 @@ ImageWithStatics.queryCache = function (uris) {
 };
 
 var classes = css.create({
-  accessibilityImage: _objectSpread(_objectSpread({}, StyleSheet.absoluteFillObject), {}, {
-    height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
-  })
+  accessibilityImage: {
+    // ...StyleSheet.absoluteFillObject,
+    // height: '100%',
+    height: 'auto',
+    // opacity: 0,
+    width: '100%' // zIndex: -1
+
+  }
 });
 var styles = StyleSheet.create({
   root: {
     flexBasis: 'auto',
     overflow: 'hidden',
-    zIndex: 0
+    zIndex: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   inline: {
     display: 'inline-flex'
@@ -364,15 +362,21 @@ var styles = StyleSheet.create({
     zIndex: -1
   })
 });
-var resizeModeStyles = StyleSheet.create({
+var resizeModeStyles = css.create({
   center: {
-    backgroundSize: 'auto'
+    // backgroundSize: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   contain: {
-    backgroundSize: 'contain'
+    // backgroundSize: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   cover: {
-    backgroundSize: 'cover'
+    // backgroundSize: 'cover'
+    objectFit: 'cover',
+    height: '100%'
   },
   none: {
     backgroundPosition: '0 0',
