@@ -150,7 +150,6 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const {
       accessibilityLabel,
       blurRadius,
-      defaultSource,
       draggable,
       onError,
       onLayout,
@@ -162,7 +161,10 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
       style,
       ...rest
     } = props;
-
+    let { defaultSource } = props;
+    if (!defaultSource) {
+      defaultSource = source;
+    }
     if (process.env.NODE_ENV !== 'production') {
       if (props.children) {
         throw new Error(

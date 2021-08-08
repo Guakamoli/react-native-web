@@ -180,7 +180,6 @@ function resolveAssetUri(source) {
 var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var accessibilityLabel = props.accessibilityLabel,
       blurRadius = props.blurRadius,
-      defaultSource = props.defaultSource,
       draggable = props.draggable,
       onError = props.onError,
       onLayout = props.onLayout,
@@ -190,7 +189,13 @@ var Image = /*#__PURE__*/React.forwardRef(function (props, ref) {
       pointerEvents = props.pointerEvents,
       source = props.source,
       style = props.style,
-      rest = _objectWithoutPropertiesLoose(props, ["accessibilityLabel", "blurRadius", "defaultSource", "draggable", "onError", "onLayout", "onLoad", "onLoadEnd", "onLoadStart", "pointerEvents", "source", "style"]);
+      rest = _objectWithoutPropertiesLoose(props, ["accessibilityLabel", "blurRadius", "draggable", "onError", "onLayout", "onLoad", "onLoadEnd", "onLoadStart", "pointerEvents", "source", "style"]);
+
+  var defaultSource = props.defaultSource;
+
+  if (!defaultSource) {
+    defaultSource = source;
+  }
 
   if (process.env.NODE_ENV !== 'production') {
     if (props.children) {
