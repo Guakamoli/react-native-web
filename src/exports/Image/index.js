@@ -354,15 +354,18 @@ const styles = StyleSheet.create({
 const resizeModeStyles = css.create({
   center: {
     // backgroundSize: 'contain'
-    objectFit: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   contain: {
     // backgroundSize: 'contain'
-    objectFit: 'contain'
+    objectFit: 'contain',
+    height: 'auto'
   },
   cover: {
     // backgroundSize: 'cover'
-    objectFit: 'cover'
+    objectFit: 'cover',
+    height: '100%'
   },
   none: {
     backgroundPosition: '0 0',
