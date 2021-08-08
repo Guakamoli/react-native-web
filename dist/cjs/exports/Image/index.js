@@ -379,18 +379,15 @@ var styles = _StyleSheet.default.create({
 var resizeModeStyles = _css.default.create({
   center: {
     // backgroundSize: 'contain'
-    objectFit: 'contain',
-    height: 'auto'
+    objectFit: 'contain'
   },
   contain: {
     // backgroundSize: 'contain'
-    objectFit: 'contain',
-    height: 'auto'
+    objectFit: 'contain'
   },
   cover: {
     // backgroundSize: 'cover'
-    objectFit: 'cover',
-    height: '100%'
+    objectFit: 'cover'
   },
   none: {
     backgroundPosition: '0 0',

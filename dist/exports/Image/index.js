@@ -365,18 +365,15 @@ var styles = StyleSheet.create({
 var resizeModeStyles = css.create({
   center: {
     // backgroundSize: 'contain'
-    objectFit: 'contain',
-    height: 'auto'
+    objectFit: 'contain'
   },
   contain: {
     // backgroundSize: 'contain'
-    objectFit: 'contain',
-    height: 'auto'
+    objectFit: 'contain'
   },
   cover: {
     // backgroundSize: 'cover'
-    objectFit: 'cover',
-    height: '100%'
+    objectFit: 'cover'
   },
   none: {
     backgroundPosition: '0 0',
